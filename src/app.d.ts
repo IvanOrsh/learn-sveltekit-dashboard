@@ -3,6 +3,10 @@
 declare global {
 	declare module '*&img';
 
+	interface Document {
+		startViewTransition(callback: () => void): void;
+	}
+
 	namespace App {
 		// interface Error {}
 		// interface Locals {}

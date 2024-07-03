@@ -18,3 +18,9 @@
 
 	<NavLinks />
 </nav>
+
+<style>
+	nav {
+		view-transition-name: nav;
+	}
+</style>
