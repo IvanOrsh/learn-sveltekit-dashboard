@@ -14,6 +14,9 @@ importers:
       '@fontsource/lusitana':
         specifier: ^5.0.12
         version: 5.0.12
+      lucide-svelte:
+        specifier: ^0.399.0
+        version: 0.399.0(svelte@4.2.18)
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
@@ -1218,6 +1221,11 @@ packages:
   lru-cache@10.3.0:
     resolution: {integrity: sha512-CQl19J/g+Hbjbv4Y3mFNNXFEL/5t/KCg8POCuUqd4rMKjGG+j1ybER83hxV58zL+dFI1PTkt3GNFSHRt+d8qEQ==}
     engines: {node: 14 || >=16.14}
+
+  lucide-svelte@0.399.0:
+    resolution: {integrity: sha512-NQ8AxNMKbIJsx7HV//gnAsIY1wJfb3rbXSK2S/ZDjIldvAEdzGngpUT8T8Q8zHYUuii0bavAmVARN8giR4vvpA==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
@@ -2995,6 +3003,10 @@ snapshots:
       get-func-name: 2.0.2
 
   lru-cache@10.3.0: {}
+
+  lucide-svelte@0.399.0(svelte@4.2.18):
+    dependencies:
+      svelte: 4.2.18
 
   magic-string@0.30.10:
     dependencies:
