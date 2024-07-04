@@ -2,7 +2,12 @@ import { prisma } from './prisma';
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms * 1000));
 
-export const fetchAllRevenue = async () => prisma.revenue.findMany();
+export const fetchAllRevenue = async () => {
+	await delay(3);
+	return prisma.revenue.findMany();
+};
+
+export type Revenue = Awaited<ReturnType<typeof fetchAllRevenue>>[number];
 
 //==============================================
 /*
@@ -14,8 +19,9 @@ SELECT invoices.amount, customers.name, customers.image_url, customers.email, in
       LIMIT 5`;
 
 */
-export const fetchLatestInvoices = async () =>
-	prisma.invoice.findMany({
+export const fetchLatestInvoices = async () => {
+	await delay(3);
+	return prisma.invoice.findMany({
 		take: 5,
 		orderBy: {
 			date: 'desc',
@@ -30,6 +36,7 @@ export const fetchLatestInvoices = async () =>
 			},
 		},
 	});
+};
 
 export type LatestInvoices = Awaited<ReturnType<typeof fetchLatestInvoices>>;
 
