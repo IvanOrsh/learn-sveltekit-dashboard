@@ -3,9 +3,11 @@ import { fetchAllRevenue, fetchCardData, fetchLatestInvoices } from '$lib/server
 
 // TODO: to be refactored in order to use data streaming
 export const load = (async () => {
-	const allRevenueInCents = await fetchAllRevenue();
-	const allLatestInvoices = await fetchLatestInvoices();
-	const cardData = await fetchCardData();
+	const [allRevenueInCents, allLatestInvoices, cardData] = await Promise.all([
+		fetchAllRevenue(),
+		fetchLatestInvoices(),
+		fetchCardData(),
+	]);
 
 	return {
 		allRevenue: allRevenueInCents,
