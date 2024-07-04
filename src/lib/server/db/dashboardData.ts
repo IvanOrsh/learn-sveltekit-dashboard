@@ -28,3 +28,51 @@ export const fetchLatestInvoices = async () =>
 			},
 		},
 	});
+
+//==============================================
+/*
+    SELECT COUNT(*) FROM invoices`;
+    SELECT COUNT(*) FROM customers`;
+    SELECT
+         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
+         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
+         FROM invoices`;
+*/
+export type CardData = {
+	amountCollected: number;
+	amountPending: number;
+	totalInvoices: number;
+	totalCustomers: number;
+};
+
+export const fetchCardData = async (): Promise<CardData> => {
+	const [amountCollectedResult, amountPendingResult, totalInvoices, totalCustomers] =
+		await Promise.all([
+			await prisma.invoice.aggregate({
+				_sum: {
+					amount: true,
+				},
+				where: {
+					status: 'paid',
+				},
+			}),
+			await prisma.invoice.aggregate({
+				_sum: {
+					amount: true,
+				},
+
+				where: {
+					status: 'pending',
+				},
+			}),
+			await prisma.invoice.count(),
+			await prisma.customer.count(),
+		]);
+
+	return {
+		amountCollected: amountCollectedResult._sum.amount || 0,
+		amountPending: amountPendingResult._sum.amount || 0,
+		totalInvoices,
+		totalCustomers,
+	};
+};
