@@ -6,6 +6,6 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
 export const revenueFactory = (): Omit<Revenue, 'id'>[] =>
 	months.map((month) => ({
-		revenue: faker.number.int({ min: 2_500, max: 10_000 }),
+		revenue: faker.number.int({ min: 2_500, max: 10_000 }) * 100, // in cents
 		month,
 	}));
