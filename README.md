@@ -28,9 +28,6 @@ pnpm run dev
 
 ## Useful `psql` commands:
 
-
-## 4. Just in case: `psql`
-
 To connect to a PostgreSQL database using the `psql` command-line client, you'll need the following information:
 
 1. Hostname or IP address: The address where the PostgreSQL server is running.
