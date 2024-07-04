@@ -1,14 +1,9 @@
 <script lang="ts">
-	import { formatCurrencyInCents } from '$lib/formatCurrency';
 	import { RefreshCcw } from 'lucide-svelte';
+	import { formatCurrencyInCents } from '$lib/formatCurrency';
+	import type { LatestInvoices } from '$lib/server/db/dashboardData';
 
-	export let latestInvoices: {
-		name: string;
-		email: string;
-		amount: number;
-		imageUrl: string;
-		createdAt: Date;
-	}[] = [];
+	export let latestInvoices: LatestInvoices = [];
 </script>
 
 <div class="flex w-full flex-col md:col-span-4">
@@ -19,21 +14,21 @@
 				<div class="flex flex-row items-center justify-between py-4" class:border-t={i !== 0}>
 					<div class="flex items-center">
 						<img
-							src={invoice.imageUrl}
-							alt={`${invoice.name}'s profile picture`}
+							src={invoice.customer.imageUrl}
+							alt={`${invoice.customer.name}'s profile picture`}
 							class="mr-4 rounded-full"
 							width={32}
 							height={32}
 						/>
 						<div class="min-w-0">
 							<p class="truncate text-sm font-semibold md:text-base">
-								{invoice.name}
+								{invoice.customer.name}
 							</p>
 							<p class="truncate text-sm text-gray-500 sm:block">
-								{invoice.email}
+								{invoice.customer.email}
 							</p>
 							<p class="truncate text-sm text-gray-500 sm:block">
-								{invoice.createdAt.toLocaleDateString()}
+								{invoice.date.toLocaleDateString()}
 							</p>
 						</div>
 					</div>

@@ -1,25 +1,16 @@
 import type { PageServerLoad } from './$types';
 import { fetchAllRevenue, fetchCardData, fetchLatestInvoices } from '$lib/server/db/dashboardData';
 
-// TODO: to be refactored in order to use data streaming
 export const load = (async () => {
-	const [allRevenueInCents, allLatestInvoices, cardData] = await Promise.all([
-		fetchAllRevenue(),
-		fetchLatestInvoices(),
-		fetchCardData(),
-	]);
+	const cardData = fetchCardData();
+	const latestInvoices = fetchLatestInvoices();
+	const allRevenue = fetchAllRevenue();
 
 	return {
-		allRevenue: allRevenueInCents,
-
-		latestInvoices: allLatestInvoices.map((i) => ({
-			name: i.customer.name,
-			email: i.customer.email,
-			imageUrl: i.customer.imageUrl,
-			amount: i.amount,
-			createdAt: i.date,
-		})),
-
-		cardData,
+		streamed: {
+			cardData,
+			latestInvoices,
+			allRevenue,
+		},
 	};
 }) satisfies PageServerLoad;
