@@ -48,7 +48,7 @@ export type CardData = {
 export const fetchCardData = async (): Promise<CardData> => {
 	const [amountCollectedResult, amountPendingResult, totalInvoices, totalCustomers] =
 		await Promise.all([
-			await prisma.invoice.aggregate({
+			prisma.invoice.aggregate({
 				_sum: {
 					amount: true,
 				},
@@ -56,7 +56,7 @@ export const fetchCardData = async (): Promise<CardData> => {
 					status: 'paid',
 				},
 			}),
-			await prisma.invoice.aggregate({
+			prisma.invoice.aggregate({
 				_sum: {
 					amount: true,
 				},
@@ -65,8 +65,8 @@ export const fetchCardData = async (): Promise<CardData> => {
 					status: 'pending',
 				},
 			}),
-			await prisma.invoice.count(),
-			await prisma.customer.count(),
+			prisma.invoice.count(),
+			prisma.customer.count(),
 		]);
 
 	return {
