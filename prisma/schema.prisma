@@ -18,15 +18,19 @@ model User {
   name     String @db.VarChar(255)
   email    String @unique @db.VarChar(255)
   password String @db.VarChar(255)
+
+  @@map("users")
 }
 
 model Customer {
-  id        String @id @default(uuid())
-  name      String @db.VarChar(255)
-  email     String @unique @db.VarChar(255)
-  image_url String
+  id       String @id @default(uuid())
+  name     String @db.VarChar(255)
+  email    String @unique @db.VarChar(255)
+  imageUrl String @map("image_url")
 
   invoices Invoice[]
+
+  @@map("customers")
 }
 
 model Invoice {
@@ -35,12 +39,16 @@ model Invoice {
   status String
   date   DateTime @db.Date
 
-  customer_id String
-  customer    Customer @relation(fields: [customer_id], references: [id])
+  customerId String   @map("customer_id")
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  @@map("invoices")
 }
 
 model Revenue {
   id      String @id @default(uuid())
   revenue Int
   month   String
+
+  @@map("revenues")
 }
