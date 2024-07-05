@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { formatCurrencyInCents } from '$lib/formatCurrency';
+	import { formatDate } from '$lib/formatDate';
 	import type { FilteredInvoices } from '$lib/server/db/fetchInvoices';
 
 	export let invoices: FilteredInvoices[];
@@ -79,7 +80,7 @@
 								{formatCurrencyInCents(invoice.amount)}
 							</td>
 							<td class="whitespace-nowrap px-3 py-3">
-								{invoice.date.toLocaleDateString()}
+								{formatDate(invoice.date)}
 							</td>
 							<td class="whitespace-nowrap px-3 py-3">
 								{invoice.status}

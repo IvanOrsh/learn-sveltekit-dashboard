@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { RefreshCcw } from 'lucide-svelte';
 	import { formatCurrencyInCents } from '$lib/formatCurrency';
+	import { formatDate } from '$lib/formatDate';
 	import type { LatestInvoices } from '$lib/server/db/dashboardData';
 	import LatestInvoicesSkeleton from '../Skeletons/LatestInvoicesSkeleton.svelte';
 
@@ -32,7 +33,7 @@
 									{invoice.customer.email}
 								</p>
 								<p class="truncate text-sm text-gray-500 sm:block">
-									{invoice.date.toLocaleDateString()}
+									{formatDate(invoice.date)}
 								</p>
 							</div>
 						</div>
