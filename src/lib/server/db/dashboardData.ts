@@ -1,6 +1,5 @@
 import { prisma } from './prisma';
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms * 1000));
+import { delay } from './delay';
 
 export const fetchAllRevenue = async () => {
 	await delay(3);
