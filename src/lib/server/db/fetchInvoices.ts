@@ -1,3 +1,4 @@
+import type { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
 import { delay } from './delay';
 
@@ -28,61 +29,93 @@ import { delay } from './delay';
       ORDER BY invoices.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 */
+
+function isValidDate(query: string): boolean {
+	const date = new Date(query);
+	return !isNaN(date.getTime());
+}
+
+function buildCustomerNameFilter(query: string): Prisma.CustomerWhereInput {
+	return {
+		name: {
+			contains: query,
+			mode: 'insensitive',
+		},
+	};
+}
+
+function buildCustomerEmailFilter(query: string): Prisma.CustomerWhereInput {
+	return {
+		email: {
+			contains: query,
+			mode: 'insensitive',
+		},
+	};
+}
+
+function buildInvoiceAmountFilter(query: string): Prisma.InvoiceWhereInput {
+	const amount = parseInt(query);
+	return isNaN(amount)
+		? {}
+		: {
+				amount: {
+					equals: amount * 100, // in cents
+				},
+			};
+}
+
+function buildInvoiceDateFilter(query: string): Prisma.InvoiceWhereInput {
+	return isValidDate(query)
+		? {
+				date: {
+					equals: new Date(query),
+				},
+			}
+		: {};
+}
+
+function buildInvoiceStatusFilter(query: string): Prisma.InvoiceWhereInput {
+	return {
+		status: {
+			contains: query,
+			mode: 'insensitive',
+		},
+	};
+}
+
+function buildInvoiceFilter(query: string): Prisma.InvoiceWhereInput {
+	return {
+		OR: [
+			{
+				customer: buildCustomerNameFilter(query),
+			},
+			{
+				customer: buildCustomerEmailFilter(query),
+			},
+			buildInvoiceAmountFilter(query),
+			buildInvoiceDateFilter(query),
+			buildInvoiceStatusFilter(query),
+		],
+	};
+}
+
 const ITEMS_PER_PAGE = 10;
 
 export const fetchFilteredInvoices = async (query: string = '', currentPage: number = 1) => {
-	await delay(1.5);
+	await delay(1.5); // TODO: remove delay!
 
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
 	try {
+		const whereClauses = buildInvoiceFilter(query);
+
 		const invoices = await prisma.invoice.findMany({
 			skip: offset,
 			take: ITEMS_PER_PAGE,
 			orderBy: {
 				date: 'desc',
 			},
-			where: {
-				OR: [
-					// query by customer name
-					{
-						customer: {
-							name: {
-								contains: query,
-								mode: 'insensitive',
-							},
-						},
-					},
-					// // query by customer email
-					{
-						customer: {
-							email: {
-								contains: query,
-								mode: 'insensitive',
-							},
-						},
-					},
-					// // query by amount
-					{
-						amount: {
-							equals: parseInt(query) || undefined,
-						},
-					},
-					// query by date
-					// {
-					// 	date: {
-					// 		equals: new Date(query),
-					// 	},
-					// },
-					// query by status
-					// {
-					// 	status: {
-					// 		contains: query,
-					// 		mode: 'insensitive',
-					// 	},
-					// },
-				],
-			},
+			where: whereClauses,
 			include: {
 				customer: {
 					select: {
