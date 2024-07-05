@@ -4,7 +4,7 @@
 	import { formatDate } from '$lib/formatDate';
 	import type { LatestInvoices } from '$lib/server/db/dashboardData';
 	import LatestInvoicesSkeleton from '../Skeletons/LatestInvoicesSkeleton.svelte';
-	import Avatar from '$lib/Avatar/Avatar.svelte';
+	import Avatar from '$lib/components/Avatar/Avatar.svelte';
 
 	export let latestInvoices: Promise<LatestInvoices>;
 </script>

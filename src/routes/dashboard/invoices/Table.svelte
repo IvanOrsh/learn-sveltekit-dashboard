@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Avatar from '$lib/Avatar/Avatar.svelte';
+	import Avatar from '$lib/components/Avatar/Avatar.svelte';
 	import { formatCurrencyInCents } from '$lib/formatCurrency';
 	import { formatDate } from '$lib/formatDate';
 	import type { FilteredInvoices } from '$lib/server/db/fetchInvoices';
