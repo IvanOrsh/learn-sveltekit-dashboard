@@ -4,6 +4,7 @@
 	import { formatDate } from '$lib/formatDate';
 	import type { LatestInvoices } from '$lib/server/db/dashboardData';
 	import LatestInvoicesSkeleton from '../Skeletons/LatestInvoicesSkeleton.svelte';
+	import Avatar from '$lib/Avatar/Avatar.svelte';
 
 	export let latestInvoices: Promise<LatestInvoices>;
 </script>
@@ -17,13 +18,11 @@
 			<div class="bg-white px-6">
 				{#each data as invoice, i}
 					<div class="flex flex-row items-center justify-between py-4" class:border-t={i !== 0}>
-						<div class="flex items-center">
-							<img
+						<div class="flex items-center gap-4">
+							<Avatar
 								src={invoice.customer.imageUrl}
 								alt={`${invoice.customer.name}'s profile picture`}
-								class="mr-4 rounded-full"
-								width={32}
-								height={32}
+								size={32}
 							/>
 							<div class="min-w-0">
 								<p class="truncate text-sm font-semibold md:text-base">
