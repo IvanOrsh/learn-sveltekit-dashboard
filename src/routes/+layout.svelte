@@ -21,28 +21,3 @@
 </script>
 
 <slot class="font-sans"></slot>
-
-<style>
-	@keyframes fade-out {
-		to {
-			opacity: 0;
-		}
-	}
-
-	@keyframes slide-from-right {
-		from {
-			transform: translateX(100%);
-			/* @apply shadow; */
-		}
-	}
-
-	:root::view-transition-old(root) {
-		pointer-events: none;
-		animation: 300ms ease-out both fade-out;
-	}
-
-	:root::view-transition-new(root) {
-		pointer-events: none;
-		animation: 300ms ease-out both slide-from-right;
-	}
-</style>
