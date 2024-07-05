@@ -3,6 +3,7 @@
 	import { formatCurrencyInCents } from '$lib/formatCurrency';
 	import { formatDate } from '$lib/formatDate';
 	import type { FilteredInvoices } from '$lib/server/db/fetchInvoices';
+	import InvoiceStatus from './InvoiceStatus.svelte';
 
 	export let invoices: FilteredInvoices[];
 </script>
@@ -25,7 +26,7 @@
 								</div>
 								<p class="text-sm text-gray-500">{invoice.customer.email}</p>
 							</div>
-							<!-- <InvoiceStatus status={invoice.status} /> -->
+							<InvoiceStatus status={invoice.status} />
 						</div>
 						<div class="flex w-full items-center justify-between pt-4">
 							<div>
@@ -80,8 +81,7 @@
 								{formatDate(invoice.date)}
 							</td>
 							<td class="whitespace-nowrap px-3 py-3">
-								{invoice.status}
-								<!-- <InvoiceStatus status={invoice.status} /> -->
+								<InvoiceStatus status={invoice.status} />
 							</td>
 							<td class="whitespace-nowrap py-3 pl-6 pr-3">
 								<div class="flex justify-end gap-3">
