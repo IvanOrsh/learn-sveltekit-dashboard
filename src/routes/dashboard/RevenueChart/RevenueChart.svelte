@@ -6,7 +6,7 @@
 	export let totalRevenue: Promise<Revenue[]>;
 </script>
 
-<div class="w-full md:col-span-4">
+<div class="flex w-full flex-col md:col-span-4">
 	{#await totalRevenue}
 		<RevenueChartSkeleton />
 	{:then data}

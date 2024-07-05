@@ -8,22 +8,24 @@
 	export let cardData: Promise<CardData>;
 </script>
 
-{#await cardData}
-	<CardSkeleton />
-	<CardSkeleton />
-	<CardSkeleton />
-	<CardSkeleton />
-{:then data}
-	<Card title="Collected" value={formatCurrencyInCents(data.amountCollected)}>
-		<Coins class="h-5 w-5 text-gray-700" />
-	</Card>
-	<Card title="Pending" value={formatCurrencyInCents(data.amountPending)}>
-		<Clock3 class="h-5 w-5 text-gray-700" />
-	</Card>
-	<Card title="Total Invoices" value={data.totalInvoices}>
-		<Inbox class="h-5 w-5 text-gray-700" />
-	</Card>
-	<Card title="Total Customers" value={data.totalCustomers}>
-		<Users2 class="h-5 w-5 text-gray-700" />
-	</Card>
-{/await}
+<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+	{#await cardData}
+		<CardSkeleton />
+		<CardSkeleton />
+		<CardSkeleton />
+		<CardSkeleton />
+	{:then data}
+		<Card title="Collected" value={formatCurrencyInCents(data.amountCollected)}>
+			<Coins class="h-5 w-5 text-gray-700" />
+		</Card>
+		<Card title="Pending" value={formatCurrencyInCents(data.amountPending)}>
+			<Clock3 class="h-5 w-5 text-gray-700" />
+		</Card>
+		<Card title="Total Invoices" value={data.totalInvoices}>
+			<Inbox class="h-5 w-5 text-gray-700" />
+		</Card>
+		<Card title="Total Customers" value={data.totalCustomers}>
+			<Users2 class="h-5 w-5 text-gray-700" />
+		</Card>
+	{/await}
+</div>

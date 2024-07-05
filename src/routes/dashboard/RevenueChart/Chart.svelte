@@ -20,7 +20,7 @@
 				datasets: [
 					{
 						label: 'Revenue',
-						data: data.map((d) => d.revenue / 100),
+						data: data.map((d) => d.revenue / (100 * 1000)),
 						borderWidth: 1,
 						backgroundColor: '#f87171',
 					},
@@ -37,4 +37,4 @@
 	});
 </script>
 
-<canvas bind:this={canvasElement} />
+<canvas class="rounded-xl bg-white" bind:this={canvasElement}></canvas>
