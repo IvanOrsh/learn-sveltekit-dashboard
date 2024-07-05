@@ -4,6 +4,8 @@
 	import { formatDate } from '$lib/formatDate';
 	import type { FilteredInvoices } from '$lib/server/db/fetchInvoices';
 	import InvoiceStatus from './InvoiceStatus.svelte';
+	import DeleteInvoice from './DeleteInvoice.svelte';
+	import UpdateInvoice from './UpdateInvoice.svelte';
 
 	export let invoices: FilteredInvoices[];
 </script>
@@ -36,8 +38,8 @@
 								<p>{formatDate(invoice.date)}</p>
 							</div>
 							<div class="flex justify-end gap-2">
-								<!-- <UpdateInvoice id={invoice.id} /> --> Update Invoice
-								<!-- <DeleteInvoice id={invoice.id} /> --> Delete Invoice
+								<UpdateInvoice id={invoice.id} />
+								<DeleteInvoice id={invoice.id} />
 							</div>
 						</div>
 					</div>
@@ -85,8 +87,8 @@
 							</td>
 							<td class="whitespace-nowrap py-3 pl-6 pr-3">
 								<div class="flex justify-end gap-3">
-									<!-- <UpdateInvoice id={invoice.id} /> --> Update Invoice
-									<!-- <DeleteInvoice id={invoice.id} /> --> Delete Invoice
+									<UpdateInvoice id={invoice.id} />
+									<DeleteInvoice id={invoice.id} />
 								</div>
 							</td>
 						</tr>
