@@ -2,11 +2,11 @@ import { prisma } from './prisma';
 import { delay } from './delay';
 
 export const fetchAllRevenue = async () => {
-	await delay(3);
+	await delay(3); // TODO: remove delay!
 	return prisma.revenue.findMany();
 };
 
-export type Revenue = Awaited<ReturnType<typeof fetchAllRevenue>>[number];
+export type FetchedRevenue = Awaited<ReturnType<typeof fetchAllRevenue>>[number];
 
 //==============================================
 /*
@@ -19,13 +19,13 @@ SELECT invoices.amount, customers.name, customers.image_url, customers.email, in
 
 */
 export const fetchLatestInvoices = async () => {
-	await delay(3);
+	await delay(3); // TODO: remove delay!
 	return prisma.invoice.findMany({
-		take: 5,
-		orderBy: {
-			date: 'desc',
-		},
-		include: {
+		select: {
+			id: true,
+			amount: true,
+			date: true,
+			status: true,
 			customer: {
 				select: {
 					name: true,
@@ -33,6 +33,10 @@ export const fetchLatestInvoices = async () => {
 					email: true,
 				},
 			},
+		},
+		take: 5,
+		orderBy: {
+			date: 'desc',
 		},
 	});
 };
@@ -79,7 +83,7 @@ export const fetchCardData = async (): Promise<CardData> => {
 			prisma.customer.count(),
 		]);
 
-	await delay(2);
+	await delay(2); // TODO: remove delay!
 
 	return {
 		amountCollected: amountCollectedResult._sum.amount || 0,

@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { Revenue } from '$lib/server/db/dashboardData';
+	import type { FetchedRevenue } from '$lib/server/db/dashboardData';
 	import RevenueChartSkeleton from '../Skeletons/RevenueChartSkeleton.svelte';
 	import Chart from './Chart.svelte';
 
-	export let totalRevenue: Promise<Revenue[]>;
+	export let totalRevenue: Promise<FetchedRevenue[]>;
 </script>
 
 <div class="flex w-full flex-col md:col-span-4">
