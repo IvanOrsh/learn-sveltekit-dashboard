@@ -1,6 +1,8 @@
 import type { Prisma } from '@prisma/client';
 import { prisma } from './prisma';
-import { delay } from './delay';
+// import { delay } from './delay';
+
+const ITEMS_PER_PAGE = 6;
 
 //==============================================
 /* FOR INVOICES:
@@ -99,10 +101,14 @@ function buildInvoiceFilter(query: string): Prisma.InvoiceWhereInput {
 	};
 }
 
-const ITEMS_PER_PAGE = 10;
-
-export const fetchFilteredInvoices = async (query: string = '', currentPage: number = 1) => {
-	await delay(1.5); // TODO: remove delay!
+export const fetchFilteredInvoices = async ({
+	query = '',
+	currentPage = 1,
+}: {
+	query: string;
+	currentPage: number;
+}) => {
+	// await delay(1.5); // TODO: remove delay!
 
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
@@ -110,21 +116,25 @@ export const fetchFilteredInvoices = async (query: string = '', currentPage: num
 		const whereClauses = buildInvoiceFilter(query);
 
 		const invoices = await prisma.invoice.findMany({
+			select: {
+				id: true,
+				amount: true,
+				date: true,
+				status: true,
+				customer: {
+					select: {
+						name: true,
+						email: true,
+						imageUrl: true,
+					},
+				},
+			},
 			skip: offset,
 			take: ITEMS_PER_PAGE,
 			orderBy: {
 				date: 'desc',
 			},
 			where: whereClauses,
-			include: {
-				customer: {
-					select: {
-						name: true,
-						imageUrl: true,
-						email: true,
-					},
-				},
-			},
 		});
 
 		return invoices;
@@ -134,7 +144,7 @@ export const fetchFilteredInvoices = async (query: string = '', currentPage: num
 	}
 };
 
-export type FilteredInvoices = Awaited<ReturnType<typeof fetchFilteredInvoices>>[number];
+export type FilteredInvoices = Awaited<ReturnType<typeof fetchFilteredInvoices>>;
 
 /*
 export async function fetchInvoicesPages(query: string) {
